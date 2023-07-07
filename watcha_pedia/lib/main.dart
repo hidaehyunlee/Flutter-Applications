@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'book.dart';
 import 'book_service.dart';
 
 void main() {
@@ -101,8 +102,37 @@ class SearchPage extends StatelessWidget {
               ),
             ),
           ),
-          body: Center(
-            child: Text("검색"),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ListView.separated(
+              itemCount: bookService.bookList.length,
+              separatorBuilder: (context, index) {
+                return Divider();
+              },
+              itemBuilder: (context, index) {
+                if (bookService.bookList.isEmpty) return SizedBox();
+                Book book = bookService.bookList.elementAt(index);
+                return ListTile(
+                  onTap: () {},
+                  leading: Image.network(
+                    book.thumbnail,
+                    fit: BoxFit.fitHeight,
+                  ),
+                  title: Text(
+                    book.title,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  subtitle: Text(
+                    book.subtitle,
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.star_border),
+                  ),
+                );
+              },
+            ),
           ),
         );
       },
