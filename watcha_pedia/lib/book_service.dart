@@ -5,6 +5,19 @@ import 'book.dart';
 
 class BookService extends ChangeNotifier {
   List<Book> bookList = []; // 책 목록
+  List<Book> likedBookList = []; // 좋아요 책 목록
+
+  //- 좋아요가 눌러져 있지 않은 경우 (likedBookList 에 없는 경우) -> 좋아요 추가 (likedBookList 에 추가)
+  //- 좋아요가 이미 눌러져있다면 (likedBookList 에 있는 경우) -> 좋아요 취소 (likedBookList 에서 제거)
+  void toggleLikeBook({required Book book}) {
+    String bookId = book.id;
+    if (likedBookList.map((book) => book.id).contains(bookId)) {
+      likedBookList.removeWhere((book) => book.id == bookId);
+    } else {
+      likedBookList.add(book);
+    }
+    notifyListeners();
+  }
 
   void search(String q) async {
     // await 를 쓰려면 함수명 뒤에 async를 써야함
